@@ -4,6 +4,8 @@ Application coded with Streamlit to simulate loan
 
 # useful links
 https://blog.streamlit.io/data-analysis-with-mito-a-powerful-spreadsheet-in-streamlit/
+https://www.kaggle.com/learn
+
 
 
 # 1. Paramètres d’entrée - Ces données permettront d'ajuster les simulations :
