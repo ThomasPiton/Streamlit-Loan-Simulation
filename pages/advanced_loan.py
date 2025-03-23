@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.write("Advanced Loan")
+st.title("Advanced Loan")
 
 col1, col2, col3, col4 = st.columns(4)
     

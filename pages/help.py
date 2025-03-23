@@ -1,121 +1,122 @@
 import streamlit as st
 
-st.title("Need Help?")
+st.title("Besoin d'aide ?")
 
 # Introduction
 st.markdown("""
-## Frequently Asked Questions
+## Foire Aux Questions (FAQ)
 
-We've compiled answers to some of the most common questions about our loan simulation tools.
-If you can't find what you're looking for, please visit our [Contact](contact) page to submit your specific question.
+Nous avons rassemblé les réponses aux questions les plus courantes concernant nos outils de simulation de prêt.  
+Si vous ne trouvez pas ce que vous cherchez, veuillez visiter notre page [Contact](contact) pour poser votre question.
 """)
 
 # FAQ Accordion
-with st.expander("How do I use the Basic Loan simulator?"):
+with st.expander("Comment utiliser le simulateur de prêt basique ?"):
     st.markdown("""
-    The Basic Loan simulator allows you to calculate monthly payments and total interest for a simple loan.
-    
-    1. Enter the loan amount
-    2. Specify the interest rate
-    3. Set the loan term in years
-    4. Click "Calculate" to see your results
-    
-    The simulator will show you monthly payment amount, total payment over the life of the loan, and total interest paid.
+    Le simulateur de prêt basique vous permet de calculer vos mensualités et les intérêts totaux pour un prêt simple.
+
+    1. Saisissez le montant du prêt
+    2. Indiquez le taux d'intérêt
+    3. Définissez la durée du prêt en années
+    4. Cliquez sur "Calculer" pour voir les résultats
+
+    Le simulateur affichera le montant de la mensualité, le coût total du prêt et les intérêts totaux payés.
     """)
 
-with st.expander("What's the difference between the Basic and Advanced Loan simulators?"):
+with st.expander("Quelle est la différence entre le simulateur de prêt basique et avancé ?"):
     st.markdown("""
-    **Basic Loan Simulator:**
-    - Simple inputs: loan amount, interest rate, term
-    - Calculates monthly payments and total interest
-    - Best for straightforward loans
-    
-    **Advanced Loan Simulator:**
-    - Additional features: down payment, insurance, taxes
-    - Variable interest rates
-    - Amortization schedule
-    - Extra payment calculations
-    - Best for mortgages and complex loans
+    **Simulateur de prêt basique :**
+    - Entrées simples : montant du prêt, taux d’intérêt, durée
+    - Calcule les mensualités et les intérêts totaux
+    - Idéal pour les prêts classiques
+
+    **Simulateur de prêt avancé :**
+    - Fonctionnalités supplémentaires : apport personnel, assurance, taxes
+    - Taux d’intérêt variables
+    - Tableau d’amortissement détaillé
+    - Calculs avec paiements anticipés
+    - Idéal pour les prêts immobiliers et les financements complexes
     """)
 
-with st.expander("How accurate are the loan simulations?"):
+with st.expander("Quelle est la précision des simulations de prêt ?"):
     st.markdown("""
-    Our simulators use standard financial formulas to calculate loan payments and interest. While they provide a good estimate, the actual terms of your loan may vary based on:
-    
-    - Your credit score
-    - The specific lender's policies
-    - Additional fees or charges
-    - Rounding differences
-    
-    We recommend using our tools for planning purposes and consulting with a financial advisor for final decisions.
+    Nos simulateurs utilisent des formules financières standard pour calculer les mensualités et les intérêts.  
+    Cependant, les conditions réelles de votre prêt peuvent varier en fonction de :
+
+    - Votre score de crédit
+    - Les politiques spécifiques de votre banque ou prêteur
+    - Les frais supplémentaires éventuels
+    - Des arrondis appliqués aux calculs
+
+    Nos outils sont conçus pour la planification, mais nous vous recommandons de consulter un conseiller financier pour toute décision finale.
     """)
 
-with st.expander("Can I save or export my simulation results?"):
+with st.expander("Puis-je sauvegarder ou exporter mes résultats de simulation ?"):
     st.markdown("""
-    Yes! Each simulator has an export option that allows you to:
-    
-    - Download results as CSV
-    - Save amortization schedules as Excel files
-    - Generate a PDF summary
-    
-    Look for the download buttons below the simulation results.
+    Oui ! Chaque simulateur propose une option d'exportation permettant de :
+
+    - Télécharger les résultats sous format CSV
+    - Sauvegarder les tableaux d’amortissement sous format Excel
+    - Générer un résumé en PDF
+
+    Recherchez les boutons de téléchargement sous les résultats de la simulation.
     """)
 
-with st.expander("I found a bug or have a feature request"):
+with st.expander("J’ai trouvé un bug ou j’ai une suggestion de fonctionnalité"):
     st.markdown("""
-    We're constantly improving our tools based on user feedback. If you've found a bug or have ideas for new features:
-    
-    1. Visit our [Contact](contact) page
-    2. Describe the issue or feature request in detail
-    3. Include steps to reproduce any bugs
-    4. Submit the form
-    
-    Our development team reviews all feedback and prioritizes updates based on user needs.
+    Nous améliorons constamment nos outils grâce aux retours des utilisateurs. Si vous avez identifié un bug ou avez une idée de nouvelle fonctionnalité :
+
+    1. Rendez-vous sur notre page [Contact](contact)
+    2. Décrivez le problème ou votre suggestion en détail
+    3. Incluez les étapes pour reproduire un éventuel bug
+    4. Soumettez votre demande
+
+    Notre équipe de développement analyse tous les retours et priorise les mises à jour en fonction des besoins des utilisateurs.
     """)
 
-# Email support explanation
-st.header("Email Support")
+# Support par email
+st.header("Support par Email")
 
 st.markdown("""
-For questions not covered in our FAQ, we provide comprehensive email support. Here's our approach:
+Si votre question n'est pas couverte dans notre FAQ, nous offrons un support par email détaillé. Voici notre processus :
 """)
 
 st.info("""
-### Our Email Support Process
+### Notre Processus de Support par Email
 
-1. **Submit your question** through our [Contact](contact) page
+1. **Soumettez votre question** via notre page [Contact](contact)
 
-2. **Receive confirmation** immediately that we've received your inquiry
+2. **Recevez une confirmation** immédiate de la prise en compte de votre demande
 
-3. **Expert review** - Your question is routed to the appropriate specialist on our team
+3. **Analyse par un expert** - Votre question est attribuée au spécialiste le plus qualifié de notre équipe
 
-4. **Thorough research** - We take time to properly understand and research your specific situation
+4. **Recherche approfondie** - Nous prenons le temps d’examiner votre situation avec précision
 
-5. **Detailed response** - Within 1-2 business days, you'll receive a comprehensive email addressing your questions
+5. **Réponse détaillée** - Sous 1 à 2 jours ouvrés, vous recevrez un email complet répondant à vos questions
 
-6. **Follow-up support** - If our answer requires clarification or raises new questions, simply reply to continue the conversation
+6. **Suivi personnalisé** - Si notre réponse nécessite des précisions ou soulève de nouvelles interrogations, il vous suffit de répondre pour continuer la discussion
 
-We believe in providing thoughtful, well-researched answers rather than rushed responses. This approach ensures you receive accurate information tailored to your specific situation.
+Nous privilégions des réponses réfléchies et précises plutôt que des réponses rapides mais incomplètes. Ainsi, nous vous garantissons des informations fiables et adaptées à votre situation.
 """)
 
-# Video tutorials section
-st.header("Video Tutorials")
+# Tutoriels vidéo
+st.header("Tutoriels Vidéo")
 
 st.markdown("""
-Our video tutorial library provides step-by-step guidance on using each of our loan simulation tools.
+Notre bibliothèque de tutoriels vidéo vous guide pas à pas dans l'utilisation de nos outils de simulation de prêt.
 
-- [Basic Loan Simulator Tutorial](#)
-- [Advanced Loan Feature Overview](#)
-- [Comparing Multiple Loan Options](#)
-- [Creating Loan Scenarios](#)
+- [Tutoriel du simulateur de prêt basique](#)
+- [Présentation des fonctionnalités avancées](#)
+- [Comparaison de plusieurs options de prêt](#)
+- [Création de scénarios de prêt](#)
 
-*(Note: In a real implementation, these would be actual links to videos)*
+*(Remarque : Dans une version réelle, ces liens pointeraient vers des vidéos explicatives)*
 """)
 
-# Contact prompt
+# Invitation à contacter le support
 st.markdown("""
-## Still Have Questions?
+## Vous avez encore des questions ?
 
-If you can't find the answers you need here, please don't hesitate to [contact us](contact). 
-Our team is committed to providing personalized assistance for all your loan simulation needs.
+Si vous ne trouvez pas les réponses que vous cherchez ici, n'hésitez pas à nous [contacter](contact).  
+Notre équipe est à votre disposition pour vous fournir une assistance personnalisée pour toutes vos simulations de prêt.
 """)

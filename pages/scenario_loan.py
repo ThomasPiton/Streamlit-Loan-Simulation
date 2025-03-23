@@ -1,4 +1,4 @@
 import streamlit as st
 
-st.write("Scenario Loan")
+st.title("Scenario Loan")
 

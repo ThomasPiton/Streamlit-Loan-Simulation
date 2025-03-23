@@ -1,4 +1,4 @@
 import streamlit as st
 
-st.write("Comparator Loan")
+st.title("Comparator Loan")
 
