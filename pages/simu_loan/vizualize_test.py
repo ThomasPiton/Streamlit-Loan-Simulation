@@ -406,5 +406,41 @@ def main():
         st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_13")
         st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_14")
   
+    # Créer des onglets
+    tabs = st.tabs(["Onglet 1", "Onglet 2", "Onglet 3"])
+
+    # Onglet 1
+    with tabs[0]:
+        st.header("Contenu du premier onglet")
+        cols = st.columns(3)  # 3 colonnes dans cet onglet
+        with cols[0]:
+            st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_15")
+        with cols[1]:
+            st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_16")
+        with cols[2]:
+            st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_17")
+
+    # Onglet 2
+    with tabs[1]:
+        st.header("Contenu du deuxième onglet")
+        cols = st.columns(2)  # 2 colonnes dans cet onglet
+        with cols[0]:
+            st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_18")
+        with cols[1]:
+            st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_19")
+
+    # Onglet 3
+    with tabs[2]:
+        st.header("Contenu du troisième onglet")
+        cols = st.columns(4)  # 4 colonnes dans cet onglet
+        with cols[0]:
+            st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_20")
+        with cols[1]:
+            st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_21")
+        with cols[2]:
+            st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_22")
+        with cols[3]:
+            st.plotly_chart(create_line_chart2(), use_container_width=True, autosize=True, key="chart_23")
+  
         
 main()
