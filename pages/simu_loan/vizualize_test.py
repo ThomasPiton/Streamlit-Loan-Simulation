@@ -294,8 +294,8 @@ def create_line_chart2():
         xaxis_title='X Axis',
         yaxis_title='Y Values',
         template='plotly_dark',
-        height=250,  # Reduced height for better space usage
-        width=1000,
+        # height=250,  # Reduced height for better space usage
+        # width=1000,
         margin=dict(t=20, b=20, l=20, r=20),  # Minimized margins
         font=dict(size=10),  # Smaller font size for labels
         showlegend=True,  # Enable legend for clarity
@@ -380,15 +380,15 @@ def main():
 
     # Display 5 charts horizontally
     with col1:
-        st.plotly_chart(create_line_chart2(), use_container_width=False, key="chart_1")
+        st.plotly_chart(create_line_chart2(), use_container_width=True, key="chart_1")
     with col2:
-        st.plotly_chart(create_line_chart2(), use_container_width=False,key="chart_2")
+        st.plotly_chart(create_line_chart2(), use_container_width=True,key="chart_2")
     with col3:
-        st.plotly_chart(create_line_chart2(), use_container_width=False,key="chart_3")
+        st.plotly_chart(create_line_chart2(), use_container_width=True,key="chart_3")
     with col4:
-        st.plotly_chart(create_line_chart2(), use_container_width=False,key="chart_4")
+        st.plotly_chart(create_line_chart2(), use_container_width=True,key="chart_4")
     with col5:
-        st.plotly_chart(create_line_chart2(), use_container_width=False , key="chart_5")
+        st.plotly_chart(create_line_chart2(), use_container_width=True , key="chart_5")
         
     col1, col2, col3 = st.columns(3)
 
