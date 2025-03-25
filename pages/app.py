@@ -7,15 +7,19 @@ st.logo(
     icon_image="static/img/bank_logo.png")
 
 pages = {
-    "Simulations": [
-        st.Page(page="basic_loan.py", title="Basic Loan", icon=":material/monitoring:"),
-        st.Page(page="advanced_loan.py", title="Advanced Loan", icon=":material/monitoring:"),
-        st.Page(page="comparator_loan.py", title="Comparator Loan", icon=":material/monitoring:"),
-        st.Page(page="scenario_loan.py", title="Scenario Loan", icon=":material/monitoring:"),
+    "Loan Simulations": [
+        st.Page(page="simu_loan/basic_loan.py", title="Basic Loan", icon=":material/credit_score:"),
+        st.Page(page="simu_loan/advanced_loan.py", title="Advanced Loan", icon=":material/credit_score:"),
+        st.Page(page="simu_loan/comparator_loan.py", title="Comparator Loan", icon=":material/credit_score:"),
+        st.Page(page="simu_loan/scenario_loan.py", title="Scenario Loan", icon=":material/credit_score:"),
+        st.Page(page="simu_loan/vizualize_test.py", title="Vizualize", icon=":material/credit_score:"),
+    ],
+    "Investment Simulations": [
+        st.Page("simu_investment/basic_investment.py", title="Basic Investment", icon=":material/monitoring:"),
     ],
     "Resources": [
-        st.Page("contact.py", title="Contact", icon=":material/contacts_product:"),
-        st.Page("help.py", title="Need help ?", icon=":material/help:"),
+        st.Page("resources/contact.py", title="Contact", icon=":material/contacts_product:"),
+        st.Page("resources/help.py", title="Need help ?", icon=":material/help:"),
     ],
 }
 
