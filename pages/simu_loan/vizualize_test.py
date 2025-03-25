@@ -1,11 +1,8 @@
 import streamlit as st
 import plotly.graph_objs as go
 import plotly.express as px
-import plotly.figure_factory as ff
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import holoviews as hv
 
 # Seed for reproducibility
 np.random.seed(42)
