@@ -1,0 +1,8 @@
+Very good I just want you to do tehse: 
+- Change the graph "Monthly payment Breakdown" with are 
+- Add Min/Max Loan duration
+- Add Min/mAx monthly Interest payment over the all duration
+- In the Amortization details add a colomn for each Monthly payment from each loan in addition of what you show. 
+- Add in the Loan Parameters the possibility to do rembourdsement anticipé for a specific amount and specific date with fees % or amount. 
+- Add possibility to do differed repayment loean with addition
+
