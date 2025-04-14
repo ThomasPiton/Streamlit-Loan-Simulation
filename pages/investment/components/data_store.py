@@ -12,3 +12,7 @@ class DataStore:
     @classmethod
     def all(cls):
         return cls._data
+
+    @classmethod
+    def get_all(cls):  # Ajout de cette méthode
+        return cls._data.copy()

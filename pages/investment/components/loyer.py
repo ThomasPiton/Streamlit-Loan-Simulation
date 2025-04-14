@@ -1,12 +1,12 @@
 import streamlit as st
 from datetime import timedelta
-
-from pages.investment.display.base_section import BaseSection
+from pages.investment.components.data_store import DataStore
+from pages.investment.components.base_section import BaseSection
 
 class Loyer(BaseSection):
     
     def render(self):
-        with st.expander("Paramètres de Location", expanded=False):
+        with st.expander("Paramètres de Loyer", expanded=False):
     
             label_loyer = [f"Loyer {i+1}" for i in range(5)]
             onglets = st.tabs(label_loyer)
@@ -78,22 +78,21 @@ class Loyer(BaseSection):
                         mois_occupes = round(jours_occupes / 30.4, 1)
                         st.info(f"≈ {taux_occupation}% ou {mois_occupes} mois occupés par an.")
                         
-                    # Stocker les informations de loyer si actif
-                    if active and loyer_mensuel > 0:
-                        loyers.append({
-                            "label": label_loyer[i],
-                            "loyer_mensuel": loyer_mensuel,
-                            "charges_mensuelles": charges_mensuelles,
-                            "duree_contrat_mois": duree_contrat_mois,
-                            "duree_contrat_annees": duree_contrat_annees,
-                            "start_date": start_date,
-                            "end_date": end_date,
-                            "indexation": indexation,
-                            "taux_occupation": taux_occupation,
-                            "mois_occupes": mois_occupes
-                        })
-                    else:
-                        loyers.append({
-                            "label": label_loyer[i],
-                            "active": False
-                        })
+                    if active:
+                        loyers.append(
+                            {
+                                "label": label_loyer[i],
+                                "loyer_mensuel": loyer_mensuel,
+                                "charges_mensuelles": charges_mensuelles,
+                                "duree_contrat_mois": duree_contrat_mois,
+                                "duree_contrat_annees": duree_contrat_annees,
+                                "start_date": start_date,
+                                "end_date": end_date,
+                                "indexation": indexation,
+                                "taux_occupation": taux_occupation,
+                                "mois_occupes": mois_occupes
+                            }
+                        )
+
+            # Enregistrement des données dans DataStore
+            DataStore.set("loyers", {"loyers":loyers})

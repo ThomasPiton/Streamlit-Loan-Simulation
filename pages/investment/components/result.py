@@ -1,6 +1,6 @@
 import streamlit as st
-from pages.investment.display.base_section import BaseSection
-from data_store import DataStore
+from pages.investment.components.base_section import BaseSection
+from pages.investment.components.data_store import DataStore
 
 class Result(BaseSection):
     

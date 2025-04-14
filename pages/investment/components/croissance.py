@@ -1,5 +1,6 @@
 import streamlit as st
-from pages.investment.display.base_section import BaseSection
+from pages.investment.components.base_section import BaseSection
+from pages.investment.components.data_store import DataStore
 
 class Croissance(BaseSection):
 
@@ -8,8 +9,8 @@ class Croissance(BaseSection):
             st.subheader("Hypothèses de Croissance et d'Inflation")
 
             # Activation du contrôle de la croissance et inflation
-            active_growth = st.checkbox("Activer / Désactiver la gestion de la Croissance et Inflation", key="active_growth")
-            if active_growth:
+            active = st.checkbox("Activer / Désactiver la gestion de la Croissance et Inflation", key="active_growth")
+            if active:
                 st.success("**Activée**") 
             else: 
                 st.warning("**Désactivée**")
@@ -85,3 +86,19 @@ class Croissance(BaseSection):
             st.markdown("Estime l'évolution annuelle de tes revenus personnels (salaires, dividendes, etc.), ce qui peut affecter ta capacité d'épargne et ta situation fiscale.")
             taux_croissance_revenus = st.number_input("Croissance des Revenus Personnels (%)", 
                                                     min_value=0.0, max_value=10.0, value=0.0, step=0.1, key="taux_croissance_revenus")
+            
+            if active:
+                DataStore.set("croissance", {
+                    "taux_croissance_annuel": taux_croissance_annuel,
+                    "taux_inflation": taux_inflation,
+                    "taux_augmentation_loyer": taux_augmentation_loyer,
+                    "taux_croissance_prix_m2": taux_croissance_prix_m2,
+                    "taux_croissance_charges_copro": taux_croissance_charges_copro,
+                    "taux_croissance_taxe_fonciere": taux_croissance_taxe_fonciere,
+                    "taux_croissance_entretien": taux_croissance_entretien,
+                    "taux_croissance_assurance_pno": taux_croissance_assurance_pno,
+                    "taux_croissance_assurance_emprunteur": taux_croissance_assurance_emprunteur,
+                    "taux_croissance_cout_travaux": taux_croissance_cout_travaux,
+                    "taux_actualisation": taux_actualisation,
+                    "taux_croissance_revenus": taux_croissance_revenus
+                })
