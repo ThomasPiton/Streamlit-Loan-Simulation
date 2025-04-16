@@ -95,4 +95,4 @@ class Loyer(BaseSection):
                         )
 
             # Enregistrement des données dans DataStore
-            DataStore.set("loyers", {"loyers":loyers})
+            DataStore.set("loyers", loyers)

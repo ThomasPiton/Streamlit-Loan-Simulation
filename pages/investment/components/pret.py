@@ -20,8 +20,22 @@ class Pret(BaseSection):
                     else:
                         st.warning(f"{label_pret[i]} est **désactivé**.")
 
+                    
                     # Date 
                     start_date = st.date_input("Date de Début", key=f"debut_{i}")
+                    
+                    # Selectbox pour le démarrage du remboursement
+                    remboursement_option = st.selectbox(
+                        "Début du remboursement",
+                        options=[
+                            "À la date de début du prêt",
+                            "Au début de la période suivante",
+                            "À la fin de la première période"
+                        ],
+                        index=0,
+                        key=f"remboursement_option_{i}"
+                    )
+                    
                     cash_apport = st.number_input("Apport Cash (€)", min_value=0, max_value=10_000_000, value=0, step=1, key=f"apport_{i}")
                     montant_pret = st.number_input("Montant du Prêt (€)", min_value=1000, max_value=10_000_000, value=100_000, step=1, key=f"montant_{i}")
                     taux_interet = st.number_input("Taux d'Intérêt Annuel (%)", min_value=0.0, max_value=100.0, value=5.0, step=0.1, key=f"taux_{i}")
@@ -166,6 +180,7 @@ class Pret(BaseSection):
                                 "type_remboursement": type_remboursement,
                                 "duree_mois": duree_mois,
                                 "date_debut": str(start_date),
+                                "remboursement_option": remboursement_option,
                                 "periodicite": periodicite,
                                 "differe": {
                                     "active": activer_differe,
@@ -178,4 +193,4 @@ class Pret(BaseSection):
                         )
 
             # Enregistrement des données dans DataStore
-            DataStore.set("prets", {"prets":prets})
+            DataStore.set("prets", prets)
