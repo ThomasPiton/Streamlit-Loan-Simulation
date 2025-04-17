@@ -4,7 +4,8 @@ from pages.investment.components.data_store import DataStore
 
 class Pret(BaseSection):
     def render(self):
-        with st.expander("Paramètres de Prêt", expanded=False):
+        with st.expander("3️⃣ Paramètres de Prêt – *Cliquez pour ouvrir*", expanded=False):
+            
             label_pret = [f"Prêt {i+1}" for i in range(5)]
             onglets = st.tabs(label_pret)
             prets = []

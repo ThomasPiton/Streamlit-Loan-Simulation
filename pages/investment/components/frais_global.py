@@ -5,7 +5,7 @@ from pages.investment.components.data_store import DataStore
 class FraisGlobal(BaseSection):
     
     def render(self):
-        with st.expander("Frais Globaux du Projet", expanded=False):
+        with st.expander("6️⃣ Frais Globaux du Projet – *Cliquez pour ouvrir*", expanded=False):
             st.subheader("Frais Globaux du Projet")
 
             active = st.checkbox("Activer / Désactiver", key="frais_global_active")

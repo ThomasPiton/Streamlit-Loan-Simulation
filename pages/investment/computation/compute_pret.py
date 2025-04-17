@@ -1,20 +1,18 @@
-from pages.investment.components.data_store import DataStore
+
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta  # Correction: relativedelta sans 's'
 
-class InvestmentModel:
+from pages.investment.components.data_store import DataStore
+from pages.investment.computation.base_compute import BaseCompute
+
+class ComputeLoyer(BaseCompute):
     
     def __init__(self):
-        self.data = DataStore.all()
-        self.prets = self.data["prets"]
-        
-    def run(self):
-        df_pret = self._create_pret_table()
-        # df_loyer = self._create_loyer_table()
-
-    def _create_pret_table(self):
+        pass
+    
+    def compute_basic_pret_table(self):
         """
         Crée un DataFrame des paiements quotidiens pour chaque pret.
         
@@ -342,20 +340,11 @@ class InvestmentModel:
             df['capital_restant_total'] = df[colonnes_capital_restant].sum(axis=1)
         
         return df
-
-    def calculer_duree_restante(self, capital, taux, mensualite):
-        """
-        Calcule le nombre de périodes nécessaires pour rembourser un capital
-        à un taux donné avec une mensualité fixe.
-        
-        Args:
-            capital (float): Capital restant à rembourser
-            taux (float): Taux d'intérêt par période
-            mensualite (float): Montant du remboursement périodique
-            
-        Returns:
-            float: Nombre de périodes nécessaires
-        """
+    
+    def compute_advanced_pret_table(self):
+        pass
+    
+    def _calculer_duree_restante(self, capital, taux, mensualite):
         if taux == 0:
             return capital / mensualite
         
@@ -363,3 +352,5 @@ class InvestmentModel:
             return float('inf')  # Mensualité insuffisante pour couvrir les intérêts
         
         return np.log(mensualite / (mensualite - capital * taux)) / np.log(1 + taux)
+    
+        

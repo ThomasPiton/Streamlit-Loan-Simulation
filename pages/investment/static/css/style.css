@@ -1,0 +1,28 @@
+.stButton > button {
+    background-color: #007aff;  /* Bleu typique d'Apple */
+    color: white;  /* Couleur de texte initiale */
+    padding: 0.6em 1.8em;
+    border-radius: 12px;  /* Coins très arrondis, comme sur les boutons Apple */
+    font-weight: 600;
+    font-size: 17px;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.041);  /* Ombre douce */
+    transition: all 0.2s ease-in-out;  /* Transitions douces */
+    margin-top: 1em;
+    cursor: pointer;
+    text-align: center;
+}
+
+.stButton > button:hover {
+    transform: scale(1.0);  /* Légère augmentation de la taille pour un effet visuel doux */
+    color: #8d1010;  /* Changer la couleur du texte en rouge légèrement orangé */
+}
+
+.stButton > button:active {
+    transform: scale(1);  /* Réinitialiser la taille pour l'effet de clic */
+}
+
+.stButton > button:focus {
+    outline: none;  /* Pas de contour par défaut sur iOS/macOS */
+    /* box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.6);  Ombre bleue claire lors du focus */
+}

@@ -5,7 +5,7 @@ from pages.investment.components.data_store import DataStore
 class Fisca(BaseSection):
     
     def render(self):
-        with st.expander("Fiscalité et Considérations Fiscales", expanded=False):
+        with st.expander("7️⃣ Fiscalité et Considérations Fiscales – *Cliquez pour ouvrir*", expanded=False):
             st.subheader("Hypothèses Fiscales et de Taxation")
             active = st.checkbox("Activer / Désactiver", key=f"active_fisca")
             if active:

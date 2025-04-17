@@ -5,7 +5,8 @@ from pages.investment.components.data_store import DataStore
 class Travaux(BaseSection):
 
     def render(self):
-        with st.expander("Rénovation, Réparations et Estimations de Travaux", expanded=False):
+        with st.expander("2️⃣ Rénovation, Réparations et Estimations de Travaux – *Cliquez pour ouvrir*", expanded=False):
+            
             st.subheader("Estimations de Rénovation et Travaux")
 
             active_renovation = st.checkbox("Activer / Désactiver", key="active_renovation")

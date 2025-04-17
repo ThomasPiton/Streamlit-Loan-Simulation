@@ -6,7 +6,7 @@ from pages.investment.components.base_section import BaseSection
 class Loyer(BaseSection):
     
     def render(self):
-        with st.expander("Paramètres de Loyer", expanded=False):
+        with st.expander("4️⃣ Paramètres de Loyer – *Cliquez pour ouvrir*", expanded=False):
     
             label_loyer = [f"Loyer {i+1}" for i in range(5)]
             onglets = st.tabs(label_loyer)

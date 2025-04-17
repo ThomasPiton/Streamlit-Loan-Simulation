@@ -5,7 +5,7 @@ from pages.investment.components.data_store import DataStore
 class Croissance(BaseSection):
 
     def render(self):
-        with st.expander("Hypothèses de Croissance Économique et d'Inflation", expanded=False):
+        with st.expander("8️⃣ Hypothèses de Croissance Économique et d'Inflation – *Cliquez pour ouvrir*", expanded=False):
             st.subheader("Hypothèses de Croissance et d'Inflation")
 
             # Activation du contrôle de la croissance et inflation

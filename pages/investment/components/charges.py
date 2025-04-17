@@ -5,7 +5,7 @@ from pages.investment.components.data_store import DataStore
 class Charges(BaseSection):
     
     def render(self):
-        with st.expander("Dépenses Courantes et Charges Récurrentes", expanded=False):
+        with st.expander("5️⃣ Dépenses Courantes et Charges Récurrentes – *Cliquez pour ouvrir*", expanded=False):
             st.subheader("Dépenses et Charges Récurrentes")
             active = st.checkbox("Activer / Désactiver", key=f"active")
             if active:
