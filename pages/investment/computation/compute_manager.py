@@ -1,4 +1,4 @@
-from pages.investment.computation.compute_pret_v2 import ComputePretV2
+from pages.investment.computation.compute_pret import ComputePret
 from pages.investment.computation.compute_loyer import ComputeLoyer
 # from .compute_charges import ComputeCharges
 # from .compute_rentabilite import ComputeRentabilite
@@ -8,7 +8,7 @@ from pages.investment.computation.compute_loyer import ComputeLoyer
 class ComputeManager:
     def __init__(self):
         self.calculateurs = [
-            ComputePretV2(),  # Calcul des échéances de prêt
+            ComputePret(),  # Calcul des échéances de prêt
             ComputeLoyer(),  # Calcul des revenus locatifs
             # ComputeCharges(),  # Calcul des charges
             # ComputeFiscalite(),  # Calcul de la fiscalité

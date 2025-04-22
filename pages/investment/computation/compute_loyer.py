@@ -19,20 +19,6 @@ class ComputeLoyer(BaseCompute):
      
     def run(self):
         """
-        Exécute le calcul complet des revenus locatifs.
-        Cette méthode est appelée par la classe InvestmentModel.
-        
-        Returns:
-            dict: Résultats des calculs
-        """
-        df_loyers = self.compute_loyers_table()
-        
-        # Calculs supplémentaires si nécessaire
-        
-        return self.results
-    
-    def compute_loyers_table(self, loyers=None, date_debut_min=None, date_fin_max=None):
-        """
         Crée un DataFrame des revenus locatifs quotidiens pour tous les baux.
         
         Args:
@@ -43,14 +29,12 @@ class ComputeLoyer(BaseCompute):
         Returns:
             pd.DataFrame: DataFrame avec les revenus locatifs quotidiens
         """
-        # Utiliser les loyers passés en paramètre ou ceux stockés dans la classe
-        loyers = loyers if loyers is not None else self.loyers
-        
-        if not loyers:
+
+        if not self.loyers:
             return pd.DataFrame(columns=['date', 'loyer_total', 'charges_total'])
         
         # Convertir les dates string en datetime si nécessaire
-        loyers = self._normaliser_dates_loyers(loyers)
+        loyers = self._normaliser_dates_loyers(self.loyers)
         
         # Déterminer les dates de début et de fin
         if date_debut_min is None:

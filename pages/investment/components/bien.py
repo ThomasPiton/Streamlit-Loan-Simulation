@@ -18,11 +18,11 @@ class Bien(BaseSection):
             surface_annexe = st.number_input("Surface annexe (balcon, cave, garage) (m²)", min_value=0.0, step=1.0, key="surface_annexe")
             nb_pieces = st.number_input("Nombre de pièces", min_value=0, step=1, key="nb_pieces")
             nb_chambres = st.number_input("Nombre de chambres", min_value=0, step=1, key="nb_chambres")
-            annee_construction = st.number_input("Année de construction", min_value=1800, max_value=2100, step=1, key="annee_construction")
+            annee_construction = st.number_input("Année de construction", min_value=2000, max_value=2100, step=1, key="annee_construction")
             etage = st.number_input("Étage", min_value=0, step=1, key="etage")
             ascenseur = st.checkbox("Ascenseur", key="ascenseur")
             etat_general = st.selectbox("État général du bien", ["Neuf", "Rénové", "Bon état", "Travaux à prévoir"], key="etat_general")
-            date_travaux = st.date_input("Date prévue des travaux", key="date_travaux")
+            
             dpe = st.selectbox("Classe énergétique (DPE)", ["A", "B", "C", "D", "E", "F", "G"], key="dpe")
             localisation = st.text_input("Localisation (ville, quartier, code postal)", key="localisation")
             zone_loyers = st.selectbox("Zone géographique (loyers réglementés)", ZONE_BIEN, key="zone_loyers")
@@ -41,7 +41,6 @@ class Bien(BaseSection):
                 "etage": etage,
                 "ascenseur": ascenseur,
                 "etat_general": etat_general,
-                "date_travaux": date_travaux,
                 "dpe": dpe,
                 "localisation": localisation,
                 "zone_loyers": zone_loyers,

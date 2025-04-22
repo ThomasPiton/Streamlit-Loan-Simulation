@@ -5,6 +5,7 @@ from pages.investment.components.data_store import DataStore
 from pages.investment.computation.compute_manager import ComputeManager
 
 class InvestmentModel:
+    
     def __init__(self):
         self.data = DataStore.get_all()
         self.validator = InputValidator(self.data)
@@ -13,8 +14,6 @@ class InvestmentModel:
         
     def run(self):
         """Exécute le modèle complet et retourne les résultats"""
-        # Validation des entrées
-        is_valid = self.validator.validate()
         
         # Affichage des warnings
         warnings = self.validator.get_warnings()
