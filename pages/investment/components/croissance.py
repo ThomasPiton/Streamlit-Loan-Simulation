@@ -8,7 +8,7 @@ class Croissance(BaseSection):
         with st.expander("8️⃣ Hypothèses de Croissance Économique et d'Inflation – *Cliquez pour ouvrir*", expanded=False):
             
             st.subheader("Hypothèses de Croissance et d'Inflation")
-
+            st.divider()
             # Taux de Croissance Économique Annuel
             st.markdown("### Taux de Croissance Économique Annuel (%)")
             st.markdown("Ce taux représente la croissance attendue de l'économie sur une année. Il est utilisé pour estimer la hausse des revenus, des prix et des autres éléments économiques.")

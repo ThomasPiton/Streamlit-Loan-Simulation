@@ -13,7 +13,7 @@ class Pret(BaseSection):
             for i, onglet in enumerate(onglets):
                 with onglet:
                     st.subheader(f"Paramètres pour {label_pret[i]}")
-
+                    st.divider()
                     active = st.checkbox("Activer / Désactiver", key=f"activer_{i}")
 
                     if active:
@@ -76,16 +76,16 @@ class Pret(BaseSection):
 
 
                     st.markdown("### Frais Relatifs au Prêt")
-                    frais_dossier_individuel = st.number_input("Frais de Dossier (en €)", min_value=0.0, value=500.0, step=50.0, key=f"frais_dossier_individuel_{i}")
-                    frais_assurance_individuel = st.number_input("Frais d'Assurance (en €)", min_value=0.0, value=300.0, step=50.0, key=f"frais_assurance_individuel_{i}")
-                    frais_caution_individuel = st.number_input("Frais de Caution / Garantie (%)", min_value=0.0, max_value=5.0, value=1.0, step=0.1, key=f"frais_caution_individuel_{i}")
+                    frais_dossier = st.number_input("Frais de Dossier (en €)", min_value=0.0, value=500.0, step=50.0, key=f"frais_dossier_{i}")
+                    frais_assurance = st.number_input("Frais d'Assurance (en €)", min_value=0.0, value=300.0, step=50.0, key=f"frais_assurance_{i}")
+                    frais_caution = st.number_input("Frais de Caution / Garantie (%)", min_value=0.0, max_value=5.0, value=1.0, step=0.1, key=f"frais_caution_{i}")
 
                     st.markdown("### Frais de Garanties et Autres Frais")
                     frais_garantie_hypothecaire = st.number_input("Frais de Garantie Hypothécaire (%)", min_value=0.0, max_value=5.0, value=1.5, step=0.1, key=f"frais_garantie_hypothecaire_{i}")
-                    frais_courtage_individuel = st.number_input("Frais de Courtage (en €)", min_value=0.0, value=500.0, step=100.0, key=f"frais_courtage_individuel_{i}")
+                    frais_courtage = st.number_input("Frais de Courtage (en €)", min_value=0.0, value=500.0, step=100.0, key=f"frais_courtage_{i}")
 
                     st.markdown("### Frais Annexes (Autres frais spécifiques)")
-                    frais_divers_pret = st.number_input("Frais Divers (en €)", min_value=0.0, value=0.0, step=50.0, key=f"frais_divers_pret_{i}")
+                    frais_divers = st.number_input("Frais Divers (en €)", min_value=0.0, value=0.0, step=50.0, key=f"frais_divers_{i}")
                     
                     # Différé
                     st.markdown("### Différé")
@@ -172,12 +172,12 @@ class Pret(BaseSection):
                                 "montant": montant_pret,
                                 "taux_interet": taux_interet,
                                 "type_taux": type_taux,
-                                "frais_dossier_individuel": frais_dossier_individuel,
-                                "frais_assurance_individuel": frais_assurance_individuel,
-                                "frais_caution_individuel": frais_caution_individuel,
+                                "frais_dossier": frais_dossier,
+                                "frais_assurance": frais_assurance,
+                                "frais_caution": frais_caution,
                                 "frais_garantie_hypothecaire": frais_garantie_hypothecaire,
-                                "frais_courtage_individuel": frais_courtage_individuel,
-                                "frais_divers_pret": frais_divers_pret,
+                                "frais_courtage": frais_courtage,
+                                "frais_divers": frais_divers,
                                 "type_remboursement": type_remboursement,
                                 "duree_mois": duree_mois,
                                 "date_debut": str(start_date),

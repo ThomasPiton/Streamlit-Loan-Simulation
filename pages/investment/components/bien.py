@@ -9,7 +9,7 @@ class Bien(BaseSection):
         with st.expander("1️⃣ Caractéristiques du Bien Immobilier – *Cliquez pour ouvrir*", expanded=False): 
             
             st.subheader("Informations sur le bien")
-            
+            st.divider()
             type_bien = st.selectbox("Type de bien", TYPE_BIEN, key="type_bien")
             selected_strategy = st.selectbox("Choisissez une stratégie d’investissement immobilier :", list(STRATEGIES.keys()), key="strategie_invest")
             st.markdown(f"**Description :** {STRATEGIES[selected_strategy]}")

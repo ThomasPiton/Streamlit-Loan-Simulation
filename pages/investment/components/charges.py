@@ -9,7 +9,7 @@ class Charges(BaseSection):
         with st.expander("5️⃣ Dépenses Courantes et Charges Récurrentes – *Cliquez pour ouvrir*", expanded=False):
             
             st.subheader("Dépenses et Charges Récurrentes")
-            
+            st.divider()
             taxe_fonciere = st.number_input("Taxe Foncière Annuelle (€)", min_value=0, value=0, step=1, key=f"taxe_fonciere")
             frais_assurance = st.number_input("Frais d'Assurance PNO / Bailleur (€)", min_value=0, value=0, step=50, key=f"frais_assurance")
             frais_gestion = st.number_input("Frais de Gestion Locative (%)", min_value=0.0, value=0.0, step=0.1, key=f"frais_gestion")

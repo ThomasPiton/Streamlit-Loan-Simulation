@@ -16,7 +16,8 @@ class Loyer(BaseSection):
             for i, onglet in enumerate(onglets):
                 with onglet:
                     st.subheader(f"Paramètres pour {label_loyer[i]}")
-
+                    st.divider()
+                    
                     active = st.checkbox("Activer / Désactiver", key=f"loyer_activer_{i}")
 
                     if active:

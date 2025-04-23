@@ -8,7 +8,7 @@ class Fisca(BaseSection):
         with st.expander("7️⃣ Fiscalité et Considérations Fiscales – *Cliquez pour ouvrir*", expanded=False):
             
             st.subheader("Hypothèses Fiscales et de Taxation")
-
+            st.divider()
             st.markdown("### À l’Achat")
             regime_fiscal = st.selectbox("Régime fiscal", ["Nue-propriété", "LMNP", "LMP", "SCI IS", "SCI IR"], key="regime_fiscal")
             tva_recuperable = st.checkbox("TVA récupérable", key="tva_recuperable")

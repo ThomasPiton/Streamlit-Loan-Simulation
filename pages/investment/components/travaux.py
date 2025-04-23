@@ -8,7 +8,8 @@ class Travaux(BaseSection):
         with st.expander("2️⃣ Travaux, Rénovation et Réparations – *Cliquez pour ouvrir*", expanded=False):
             
             st.subheader("Estimations de Rénovation et Travaux")
-
+            st.divider()
+            
             budget_renovation = st.number_input(
                 "Budget Global de Rénovation Estimé (€)", 
                 min_value=0, 

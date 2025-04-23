@@ -94,6 +94,9 @@ class ComputePret(BaseCompute):
             # Calculer et ajouter les frais du prêt
             df = self._ajouter_frais(df, pret, date_debut, nom_pret)
             
+            # Simuler croissance et inflation
+            df = self._ajouter_croissance(df, date_debut, nom_pret)
+            
             # Recalculer le paiement total pour ce prêt
             cols = [f'paiement_{nom_pret}', f'frais_{nom_pret}']
             df[f'paiement_{nom_pret}'] = df[cols].sum(axis=1)
@@ -306,34 +309,92 @@ class ComputePret(BaseCompute):
         return df
     
     def _ajouter_frais(self, df, pret, date_debut, nom_pret):
-        """Ajoute les frais de prêt au DataFrame"""
-        # Frais au premier jour
-        
-        df[f'frais_{nom_pret}'] = 0
-        
-        frais_premier_jour = (
-            pret['frais_dossier_individuel'] +
-            pret['frais_courtage_individuel'] +
-            pret['frais_divers_pret'] +
-            pret['montant'] * pret['frais_caution_individuel'] / 100 +
-            pret['montant'] * pret['frais_garantie_hypothecaire'] / 100
-        )
-        
-        # Assurance annuelle
-        montant_assurance_annuelle = pret['frais_assurance_individuel']
-        
-        # Ajout des frais uniques au début du prêt (utiliser loc vectorisé)
-        df.loc[df['date'] == date_debut, f'frais_{nom_pret}'] += frais_premier_jour
-        
-        # Ajout de l'assurance le 31 décembre de chaque année (utiliser loc vectorisé)
-        df.loc[(df['date'].dt.month == 12) & (df['date'].dt.day == 31), f'frais_{nom_pret}'] += montant_assurance_annuelle
+        """Ajoute les frais de prêt au DataFrame, avec colonnes détaillées"""
+
+        # Initialisation des colonnes individuelles
+        frais_colonnes = {
+            f'frais_dossier_{nom_pret}': pret['frais_dossier'],
+            f'frais_courtage_{nom_pret}': pret['frais_courtage'],
+            f'frais_divers_{nom_pret}': pret['frais_divers'],
+            f'frais_caution_{nom_pret}': pret['montant'] * pret['frais_caution'] / 100,
+            f'frais_garantie_hypothecaire_{nom_pret}': pret['montant'] * pret['frais_garantie_hypothecaire'] / 100,
+        }
+
+        # Créer toutes les colonnes avec 0 par défaut
+        for col in frais_colonnes:
+            df[col] = 0
+
+        # Remplir les frais uniquement à la date de début
+        for col, montant in frais_colonnes.items():
+            df.loc[df['date'] == date_debut, col] = montant
+
+        # Ajouter l'assurance annuelle
+        montant_assurance_annuelle = pret['frais_assurance']
+        col_assurance = f'frais_assurance_{nom_pret}'
+        df[col_assurance] = 0
+        df.loc[(df['date'].dt.month == 12) & (df['date'].dt.day == 31), col_assurance] = montant_assurance_annuelle
+
+        # Mettre à jour aussi la colonne principale avec la somme des frais
+        all_frais_cols = list(frais_colonnes.keys()) + [col_assurance]
+        df[f'frais_{nom_pret}'] = df[all_frais_cols].sum(axis=1)
 
         return df
+      
+    def _ajouter_croissance(self, df, date_debut, nom_pret):
+        """Ajoute les colonnes en valeur réelle pour assurance, intérêts, principal, paiements et capital restant dû"""
+        
+        # Extraction des taux
+        taux_croissance_assurance = self.croissance["taux_croissance_assurance_emprunteur"]/100
+        taux_inflation = self.croissance["taux_inflation"]/100
+        
+        # Ajustement: vérifiez si ces taux sont cohérents (par exemple, 2% = 0.02)
+        print(f"Taux inflation: {taux_inflation}, Taux croissance assurance: {taux_croissance_assurance}")
+        
+        # Conversion en taux journalier avec une méthode plus précise
+        taux_croissance_assurance_journalier = pow((1 + taux_croissance_assurance), (1 / 365.25)) - 1
+        taux_inflation_journalier = pow((1 + taux_inflation), (1 / 365.25)) - 1
+        
+        # Calcul des jours depuis le début
+        df['jours_depuis_debut'] = (df['date'] - date_debut).dt.days
+        
+        # Facteur d'actualisation pour chaque jour
+        df['facteur_inflation'] = pow((1 + taux_inflation_journalier), df['jours_depuis_debut'])
+        
+        # Croissance réelle des frais d'assurance (avec vérification des valeurs)
+        df[f'frais_assurance_reel_{nom_pret}'] = (
+            df[f'frais_assurance_{nom_pret}'] * 
+            pow((1 + taux_croissance_assurance_journalier), df['jours_depuis_debut']) /
+            df['facteur_inflation']
+        )
+        
+        # df[f'frais_reel_{nom_pret}'] = df[f'frais_assurance_reel_{nom_pret}'] + 
+        
+        # Liste des colonnes à actualiser en valeur réelle
+        colonnes = ['interets', 'principal', 'paiement', 'capital_restant']
+        for col in colonnes:
+            df[f'{col}_reel_{nom_pret}'] = df[f'{col}_{nom_pret}'] / df['facteur_inflation']
+        
+        return df
+
         
     def _calculer_totaux(self, df):
         """Calcule les totaux pour tous les prêts"""
         # Identifier les colonnes par type
-        prefixes = ['paiement_', 'principal_', 'interets_', 'frais_', 'capital_restant_']
+        prefixes = [
+            'paiement_pret_', 
+            'principal_pret_', 
+            'interets_pret_', 
+            'frais_pret_', 
+            'capital_restant_pret_',
+            
+            # 'frais_reel_',
+            'frais_assurance_reel_',
+            'principal_reel_',
+            'interets_reel_',
+            'paiement_reel_',
+            'capital_restant_'
+            ]
+        
         suffix = '_total'
         
         for prefix in prefixes:
