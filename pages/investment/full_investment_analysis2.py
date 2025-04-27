@@ -22,13 +22,14 @@ st.divider()
 
 # Composants dynamiques
 Bien().render()
-Travaux().render()
+Marche().render()
 Pret().render()
 Loyer().render()
 Charges().render()
-FraisGlobal().render()
+Frais().render()
 Fisca().render()
 Croissance().render()
+Travaux().render()
 
 # Bouton de calcul
 if st.button("Compute"):

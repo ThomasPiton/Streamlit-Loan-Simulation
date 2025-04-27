@@ -22,7 +22,7 @@ class Bien(BaseSection):
             etage = st.number_input("Étage", min_value=0, step=1, key="etage")
             ascenseur = st.checkbox("Ascenseur", key="ascenseur")
             etat_general = st.selectbox("État général du bien", ["Neuf", "Rénové", "Bon état", "Travaux à prévoir"], key="etat_general")
-            
+            date_horizon = st.selectbox("Période d'investissement (année)", [1,5,10,15,20,25,30,35,40,45,50], key="date_horizon")
             dpe = st.selectbox("Classe énergétique (DPE)", ["A", "B", "C", "D", "E", "F", "G"], key="dpe")
             localisation = st.text_input("Localisation (ville, quartier, code postal)", key="localisation")
             zone_loyers = st.selectbox("Zone géographique (loyers réglementés)", ZONE_BIEN, key="zone_loyers")
@@ -35,6 +35,7 @@ class Bien(BaseSection):
                 "prix_achat":prix_achat,
                 "surface": surface,
                 "surface_annexe": surface_annexe,
+                "date_horizon": date_horizon,
                 "nb_pieces": nb_pieces,
                 "nb_chambres": nb_chambres,
                 "annee_construction": annee_construction,

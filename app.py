@@ -17,6 +17,7 @@ pages = {
     ],
     "Investment Simulations": [
         st.Page("pages/investment/full_investment_analysis2.py", title="Full Investment Analysis 2", icon=":material/monitoring:"),
+        st.Page("pages/investment/fiscalité.py", title="Fiscalité", icon=":material/monitoring:"),
     ],
     "Resources": [
         st.Page("pages/others/contact.py", title="Contact", icon=":material/contacts_product:"),

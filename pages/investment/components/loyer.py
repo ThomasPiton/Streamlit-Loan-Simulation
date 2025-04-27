@@ -29,6 +29,18 @@ class Loyer(BaseSection):
                     loyer_mensuel = st.number_input("Montant du Loyer Mensuel (€)", min_value=0, value=1000, step=10, key=f"loyer_mensuel_{i}")
                     charges_mensuelles = st.number_input("Charges Mensuelles (optionnel) (€)", min_value=0, value=0, step=5, key=f"charges_mensuelles_{i}")
                     
+                    # Jour de paiement
+                    dernier_jour = st.checkbox("Paiement le dernier jour du mois ?", key=f"dernier_jour_{i}")
+
+                    if not dernier_jour:
+                        jour_paiement = st.number_input(
+                            "Jour du Paiement (1 à 28 recommandé pour éviter les problèmes de mois court)",
+                            min_value=1, max_value=28, step=1, value=1, key=f"jour_paiement_{i}"
+                        )
+                    else:
+                        jour_paiement = "last"
+
+                    
                     # Basculement d'entrée de durée
                     utiliser_mois = st.checkbox("Exprimer la Durée en Mois", key=f"utiliser_mois_loyer_{i}")
 
@@ -41,7 +53,7 @@ class Loyer(BaseSection):
 
                     # Date de début
                     start_date = st.date_input("Date de Début", key=f"start_date_loyer_{i}")
-                    end_date = start_date + timedelta(days=int(duree_contrat_mois * 30.4))
+                    end_date = start_date + timedelta(days=int(duree_contrat_mois * 30))
 
                     # Indexation
                     indexation = st.checkbox("Indexation Annuelle?", key=f"indexation_loyer_{i}")
@@ -84,6 +96,7 @@ class Loyer(BaseSection):
                             {
                                 "label": label_loyer[i],
                                 "loyer_mensuel": loyer_mensuel,
+                                "jour_paiement": jour_paiement,
                                 "charges_mensuelles": charges_mensuelles,
                                 "duree_contrat_mois": duree_contrat_mois,
                                 "duree_contrat_annees": duree_contrat_annees,

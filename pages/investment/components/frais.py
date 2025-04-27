@@ -2,10 +2,11 @@ import streamlit as st
 from pages.investment.components.base_section import BaseSection
 from pages.investment.components.data_store import DataStore
 
-class FraisGlobal(BaseSection):
+class Frais(BaseSection):
     
     def render(self):
-        with st.expander("6️⃣ Frais Globaux du Projet – *Cliquez pour ouvrir*", expanded=False):
+        
+        with st.expander("6️⃣ Frais – *Cliquez pour ouvrir*", expanded=False):
             
             st.subheader("Frais Globaux du Projet")
             st.divider()

@@ -5,7 +5,7 @@ from pages.investment.components.data_store import DataStore
 class Travaux(BaseSection):
 
     def render(self):
-        with st.expander("2️⃣ Travaux, Rénovation et Réparations – *Cliquez pour ouvrir*", expanded=False):
+        with st.expander("9️⃣ Travaux, Rénovation et Réparations – *Cliquez pour ouvrir*", expanded=False):
             
             st.subheader("Estimations de Rénovation et Travaux")
             st.divider()
@@ -31,8 +31,9 @@ class Travaux(BaseSection):
                 key="type_renovation"
             )
             
-            date_travaux = st.date_input("Date prévue des travaux", key="date_travaux")
-
+            start_date_travaux = st.date_input("Date prévue début des travaux", key="start_date_travaux")
+            end_date_travaux = st.date_input("Date prévue fin des travaux", key="end_date_travaux")
+            
             ventilation_active = st.checkbox("Activer la Ventilation par Poste", key="ventilation_active")
 
             ventilation = {}
@@ -55,7 +56,8 @@ class Travaux(BaseSection):
                 "budget_total": budget_renovation,
                 "duree_mois": duree_renovation,
                 "type": type_renovation,
-                "date_travaux":date_travaux,
+                "start_date_travaux":start_date_travaux,
+                "end_date_travaux":end_date_travaux,
                 "ventilation_active": ventilation_active,
                 "ventilation": ventilation if ventilation_active else {},
                 "fiscalite": {

@@ -392,7 +392,7 @@ class ComputePret(BaseCompute):
             'principal_reel_',
             'interets_reel_',
             'paiement_reel_',
-            'capital_restant_'
+            'capital_restant_reel_'
             ]
         
         suffix = '_total'

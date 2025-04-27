@@ -1,4 +1,5 @@
 import streamlit as st
+from dateutil.relativedelta import relativedelta
 from pages.investment.components.base_section import BaseSection
 from pages.investment.components.data_store import DataStore
 
@@ -22,8 +23,18 @@ class Pret(BaseSection):
                         st.warning(f"{label_pret[i]} est **désactivé**.")
 
                     
+                    # Durée
+                    utiliser_mois = st.checkbox("Exprimer la Durée en Mois", key=f"utiliser_mois_{i}")
+                    if utiliser_mois:
+                        duree_mois = st.number_input("Durée du Prêt (Mois)", min_value=1, max_value=600, step=1, value=240, key=f"duree_mois_{i}")
+                        duree_annees = duree_mois / 12
+                    else:
+                        duree_annees = st.number_input("Durée du Prêt (Années)", min_value=1, max_value=50, step=1, value=20, key=f"duree_annees_{i}")
+                        duree_mois = duree_annees * 12
+                    
                     # Date 
-                    start_date = st.date_input("Date de Début", key=f"debut_{i}")
+                    start_date = st.date_input("Date de Début", key=f"start_date_pret_{i}")
+                    end_date = start_date + relativedelta(months=duree_mois)
                     
                     # Selectbox pour le démarrage du remboursement
                     remboursement_option = st.selectbox(
@@ -65,15 +76,9 @@ class Pret(BaseSection):
                         key=f"type_remboursement_{i}"
                     )
 
-                    # Durée
-                    utiliser_mois = st.checkbox("Exprimer la Durée en Mois", key=f"utiliser_mois_{i}")
-                    if utiliser_mois:
-                        duree_mois = st.number_input("Durée du Prêt (Mois)", min_value=1, max_value=600, step=1, value=240, key=f"duree_mois_{i}")
-                        duree_annees = duree_mois / 12
-                    else:
-                        duree_annees = st.number_input("Durée du Prêt (Années)", min_value=1, max_value=50, step=1, value=20, key=f"duree_annees_{i}")
-                        duree_mois = duree_annees * 12
 
+
+                    
 
                     st.markdown("### Frais Relatifs au Prêt")
                     frais_dossier = st.number_input("Frais de Dossier (en €)", min_value=0.0, value=500.0, step=50.0, key=f"frais_dossier_{i}")
@@ -180,7 +185,8 @@ class Pret(BaseSection):
                                 "frais_divers": frais_divers,
                                 "type_remboursement": type_remboursement,
                                 "duree_mois": duree_mois,
-                                "date_debut": str(start_date),
+                                "start_date": start_date,
+                                "end_date": end_date,
                                 "remboursement_option": remboursement_option,
                                 "periodicite": periodicite,
                                 "differe": {

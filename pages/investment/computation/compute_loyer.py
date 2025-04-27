@@ -14,7 +14,7 @@ class ComputeLoyer(BaseCompute):
     """
     
     def __init__(self):
-        super().__init__()  # Appelle le constructeur parent pour initialiser les données
+        super().__init__()  
         self.results = {}   # Pour stocker les résultats des calculs
      
     def run(self):
@@ -22,9 +22,8 @@ class ComputeLoyer(BaseCompute):
         Crée un DataFrame des revenus locatifs quotidiens pour tous les baux.
         
         Args:
-            loyers (list): Liste de dictionnaires contenant les informations des baux
-            date_debut_min (datetime): Date de début pour la période de calcul
-            date_fin_max (datetime): Date de fin pour la période de calcul
+            date_debut_min (datetime, optional): Date de début pour la période de calcul
+            date_fin_max (datetime, optional): Date de fin pour la période de calcul
             
         Returns:
             pd.DataFrame: DataFrame avec les revenus locatifs quotidiens
@@ -34,70 +33,73 @@ class ComputeLoyer(BaseCompute):
             return pd.DataFrame(columns=['date', 'loyer_total', 'charges_total'])
         
         # Convertir les dates string en datetime si nécessaire
-        loyers = self._normaliser_dates_loyers(self.loyers)
+        self._normaliser_dates_loyers()
         
         # Déterminer les dates de début et de fin
-        if date_debut_min is None:
-            date_debut_min = min(loyer['start_date'] for loyer in loyers 
-                                if isinstance(loyer['start_date'], (date, datetime)))
-            # Conversion en datetime si c'est un objet date
-            if isinstance(date_debut_min, date) and not isinstance(date_debut_min, datetime):
-                date_debut_min = datetime.combine(date_debut_min, datetime.min.time())
         
-        if date_fin_max is None:
-            date_fin_max = max(loyer['end_date'] for loyer in loyers 
-                              if isinstance(loyer['end_date'], (date, datetime)))
-            # Conversion en datetime si c'est un objet date
-            if isinstance(date_fin_max, date) and not isinstance(date_fin_max, datetime):
-                date_fin_max = datetime.combine(date_fin_max, datetime.min.time())
+        date_debut_min = min(loyer['start_date'] for loyer in self.loyers 
+                            if isinstance(loyer['start_date'], (date, datetime)))
+        # Conversion en datetime si c'est un objet date
+        if isinstance(date_debut_min, date) and not isinstance(date_debut_min, datetime):
+            date_debut_min = datetime.combine(date_debut_min, datetime.min.time())
+    
+    
+        date_fin_max = max(loyer['end_date'] for loyer in self.loyers 
+                            if isinstance(loyer['end_date'], (date, datetime)))
+        # Conversion en datetime si c'est un objet date
+        if isinstance(date_fin_max, date) and not isinstance(date_fin_max, datetime):
+            date_fin_max = datetime.combine(date_fin_max, datetime.min.time())
         
         # Créer un DataFrame avec une ligne par jour pour toute la période
         jours = pd.date_range(start=date_debut_min, end=date_fin_max, freq='D')
-        df = pd.DataFrame({'date': jours})
+        self.df_loyers = pd.DataFrame({'date': jours})
         
         # Initialiser les colonnes totales
-        df['loyer_total'] = 0.0
-        df['charges_total'] = 0.0
+        # df['loyer_total'] = 0.0
+        # df['charges_total'] = 0.0
         
         # Traiter chaque contrat de location
-        for i, loyer in enumerate(loyers):
-            df = self._ajouter_loyer_au_dataframe(df, loyer)
+        for loyer in self.loyers:
+            self._calculer_loyer(loyer)
         
         # Calculer des statistiques agrégées
-        self._calculer_statistiques_loyers(df, loyers)
-        
-        return df
+        # self._calculer_statistiques_loyers(loyers)
+
+        self.df_loyers
     
-    def _normaliser_dates_loyers(self, loyers):
+    def _normaliser_dates_loyers(self):
         """
         Normalise les dates dans les objets loyer pour assurer la compatibilité.
         Convertit les chaînes de caractères en objets datetime.
         """
-        for i, loyer in enumerate(loyers):
+        normalized_loyers = []
+        for loyer in self.loyers:
             # Copier pour éviter de modifier l'original
-            loyers[i] = loyer.copy()
+            normalized_loyer = loyer.copy()
             
             # Normaliser start_date
-            if isinstance(loyer.get('start_date'), str):
-                loyers[i]['start_date'] = datetime.strptime(loyer['start_date'], '%Y-%m-%d')
-            elif isinstance(loyer.get('start_date'), date) and not isinstance(loyer.get('start_date'), datetime):
-                loyers[i]['start_date'] = datetime.combine(loyer['start_date'], datetime.min.time())
+            if isinstance(normalized_loyer.get('start_date'), str):
+                normalized_loyer['start_date'] = datetime.strptime(normalized_loyer['start_date'], '%Y-%m-%d')
+            elif isinstance(normalized_loyer.get('start_date'), date) and not isinstance(normalized_loyer.get('start_date'), datetime):
+                normalized_loyer['start_date'] = datetime.combine(normalized_loyer['start_date'], datetime.min.time())
                 
             # Normaliser end_date
-            if isinstance(loyer.get('end_date'), str):
-                loyers[i]['end_date'] = datetime.strptime(loyer['end_date'], '%Y-%m-%d')
-            elif isinstance(loyer.get('end_date'), date) and not isinstance(loyer.get('end_date'), datetime):
-                loyers[i]['end_date'] = datetime.combine(loyer['end_date'], datetime.min.time())
+            if isinstance(normalized_loyer.get('end_date'), str):
+                normalized_loyer['end_date'] = datetime.strptime(normalized_loyer['end_date'], '%Y-%m-%d')
+            elif isinstance(normalized_loyer.get('end_date'), date) and not isinstance(normalized_loyer.get('end_date'), datetime):
+                normalized_loyer['end_date'] = datetime.combine(normalized_loyer['end_date'], datetime.min.time())
                 
             # Si end_date n'est pas défini, le calculer à partir de la durée
-            if 'end_date' not in loyers[i] or loyers[i]['end_date'] is None:
-                duree_mois = loyers[i].get('duree_contrat_mois', 0) or loyers[i].get('duree_contrat_annees', 0) * 12
-                if duree_mois > 0 and 'start_date' in loyers[i]:
-                    loyers[i]['end_date'] = loyers[i]['start_date'] + relativedelta(months=duree_mois)
+            if 'end_date' not in normalized_loyer or normalized_loyer['end_date'] is None:
+                duree_mois = normalized_loyer.get('duree_contrat_mois', 0) or normalized_loyer.get('duree_contrat_annees', 0) * 12
+                if duree_mois > 0 and 'start_date' in normalized_loyer:
+                    normalized_loyer['end_date'] = normalized_loyer['start_date'] + relativedelta(months=duree_mois)
+            
+            normalized_loyers.append(normalized_loyer)
         
-        return loyers
+        self.loyers = normalized_loyers
     
-    def _ajouter_loyer_au_dataframe(self, df, loyer):
+    def _calculer_loyer(self,loyer):
         """
         Ajoute un contrat de location au DataFrame.
         
@@ -115,38 +117,29 @@ class ComputeLoyer(BaseCompute):
         start_date = loyer.get('start_date')
         end_date = loyer.get('end_date')
         
-        # Création de colonnes spécifiques pour ce bail
+        # Création et initialisation des colonnes
         col_loyer = f'loyer_{label}'
         col_charges = f'charges_{label}'
-        
-        # Initialiser les colonnes à 0
-        df[col_loyer] = 0.0
-        df[col_charges] = 0.0
-        
-        # Calculer le loyer journalier (en tenant compte du taux d'occupation)
+        self.df_loyers[col_loyer] = 0.0
+        self.df_loyers[col_charges] = 0.0
+
+        # Calculs journaliers
         loyer_journalier = (loyer_mensuel * 12 / 365) * taux_occupation
         charges_journalieres = (charges_mensuelles * 12 / 365) * taux_occupation
-        
-        # Appliquer les valeurs pour les jours où le bail est actif
-        mask_actif = (df['date'] >= start_date) & (df['date'] <= end_date)
-        df.loc[mask_actif, col_loyer] = loyer_journalier
-        df.loc[mask_actif, col_charges] = charges_journalieres
-        
+
+        # Application sur la période active
+        mask = (self.df_loyers['date'] >= start_date) & (self.df_loyers['date'] <= end_date)
+        self.df_loyers.loc[mask, [f'loyer_{label}', f'charges_{label}']] = loyer_journalier, charges_journalieres
+
         # Appliquer l'indexation si elle est activée
         if loyer.get('indexation', False):
-            df = self._appliquer_indexation(df, loyer, col_loyer, col_charges)
+            self._appliquer_indexation(loyer, col_loyer, col_charges)
         
         # Appliquer la saisonnalité si définie
         if 'mois_occupes' in loyer and loyer['mois_occupes'] < 12:
-            df = self._appliquer_saisonnalite(df, loyer, col_loyer, col_charges)
+            self._appliquer_saisonnalite(loyer, col_loyer, col_charges)
         
-        # Ajouter au total
-        df['loyer_total'] += df[col_loyer]
-        df['charges_total'] += df[col_charges]
-        
-        return df
-    
-    def _appliquer_indexation(self, df, loyer, col_loyer, col_charges):
+    def _appliquer_indexation(self, loyer, col_loyer, col_charges):
         """
         Applique l'indexation annuelle aux loyers et charges.
         
@@ -169,13 +162,13 @@ class ComputeLoyer(BaseCompute):
         
         # Déterminer toutes les dates d'indexation (chaque année)
         start_year = date_premiere_indexation.year
-        end_year = df['date'].max().year
+        end_year = self.df_loyers['date'].max().year
         
         for year in range(start_year, end_year + 1):
             date_indexation = datetime(year, date_premiere_indexation.month, date_premiere_indexation.day)
             
             # Vérifier si cette date est dans notre DataFrame
-            if date_indexation in df['date'].values:
+            if date_indexation in self.df_loyers['date'].values:
                 # Calculer l'année d'indexation (1ère, 2ème, etc.)
                 annee_indexation = year - start_year + 1
                 
@@ -183,19 +176,20 @@ class ComputeLoyer(BaseCompute):
                 facteur_indexation = (1 + taux_indexation) ** annee_indexation
                 
                 # Appliquer l'indexation à partir de cette date
-                mask_apres_indexation = df['date'] >= date_indexation
+                mask_apres_indexation = self.df_loyers['date'] >= date_indexation
                 
                 # Valeurs de base pour cette période
-                valeur_base_loyer = df.loc[df['date'] == loyer['start_date'], col_loyer].values[0]
-                valeur_base_charges = df.loc[df['date'] == loyer['start_date'], col_charges].values[0]
-                
-                # Appliquer l'indexation
-                df.loc[mask_apres_indexation, col_loyer] = valeur_base_loyer * facteur_indexation
-                df.loc[mask_apres_indexation, col_charges] = valeur_base_charges * facteur_indexation
+                base_date_idx = self.df_loyers['date'] == loyer['start_date']
+                if any(base_date_idx):
+                    valeur_base_loyer = self.df_loyers.loc[base_date_idx, col_loyer].values[0]
+                    valeur_base_charges = self.df_loyers.loc[base_date_idx, col_charges].values[0]
+                    
+                    # Appliquer l'indexation
+                    self.df_loyers.loc[mask_apres_indexation, col_loyer] = valeur_base_loyer * facteur_indexation
+                    self.df_loyers.loc[mask_apres_indexation, col_charges] = valeur_base_charges * facteur_indexation
         
-        return df
     
-    def _appliquer_saisonnalite(self, df, loyer, col_loyer, col_charges):
+    def _appliquer_saisonnalite(self, loyer, col_loyer, col_charges):
         """
         Applique la saisonnalité au contrat de location.
         Ajuste les loyers en fonction du nombre de mois occupés par an.
@@ -212,17 +206,17 @@ class ComputeLoyer(BaseCompute):
         mois_occupes = loyer.get('mois_occupes', 12)
         
         if mois_occupes >= 12:
-            return df  # Pas de saisonnalité à appliquer
+            return  # Pas de saisonnalité à appliquer
             
         # Définir les mois d'occupation (par défaut les premiers mois de l'année)
         mois_occupation = loyer.get('mois_occupation', list(range(1, int(mois_occupes) + 1)))
         
         # Appliquer la saisonnalité
-        mask_non_occupe = ~df['date'].dt.month.isin(mois_occupation)
-        df.loc[mask_non_occupe, col_loyer] = 0
-        df.loc[mask_non_occupe, col_charges] = 0
+        mask_non_occupe = ~self.df_loyers['date'].dt.month.isin(mois_occupation)
+        self.df_loyers.loc[mask_non_occupe, col_loyer] = 0
+        self.df_loyers.loc[mask_non_occupe, col_charges] = 0
         
-        return df
+        return self.df_loyers
     
     def _calculer_statistiques_loyers(self, df, loyers):
         """
@@ -301,3 +295,55 @@ class ComputeLoyer(BaseCompute):
             dict: Résultats des calculs
         """
         return self.results
+
+
+# Exemple d'utilisation avec les données fournies
+if __name__ == "__main__":
+    from datetime import date
+
+    # Les loyers fournis
+    loyers = [
+        {
+            'label': 'Loyer 1', 
+            'loyer_mensuel': 1000, 
+            'charges_mensuelles': 0, 
+            'duree_contrat_mois': 36, 
+            'duree_contrat_annees': 3, 
+            'start_date': date(2025, 4, 25), 
+            'end_date': date(2028, 4, 23), 
+            'indexation': False, 
+            'taux_occupation': 100.0, 
+            'mois_occupes': 12.0
+        },
+        {
+            'label': 'Loyer 2', 
+            'loyer_mensuel': 1000, 
+            'charges_mensuelles': 0, 
+            'duree_contrat_mois': 36, 
+            'duree_contrat_annees': 3, 
+            'start_date': date(2025, 4, 25), 
+            'end_date': date(2028, 4, 23), 
+            'indexation': False, 
+            'taux_occupation': 100.0, 
+            'mois_occupes': 12.0
+        }
+    ]
+    
+    # Créer l'instance et calculer le DataFrame
+    compute_loyer = ComputeLoyer(loyers)
+    df_loyers = compute_loyer.run()
+    
+    # Obtenir les résultats
+    resultats = compute_loyer.get_results()
+    
+    # Afficher un aperçu du DataFrame
+    print("Aperçu du DataFrame des loyers quotidiens:")
+    print(df_loyers.head())
+    
+    # Afficher les statistiques annuelles
+    print("\nStatistiques annuelles:")
+    print(resultats['loyer_annuel'])
+    
+    # Afficher le total des loyers
+    print(f"\nTotal des loyers: {resultats['total_loyers']:.2f} €")
+    print(f"Loyer mensuel moyen: {resultats['loyer_mensuel_moyen']:.2f} €")
