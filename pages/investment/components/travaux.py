@@ -30,7 +30,32 @@ class Travaux(BaseSection):
                 index=0, 
                 key="type_renovation"
             )
+
+            # Définir les sous-types en fonction du type choisi
+            sous_types = {
+                "Légère": ["Peinture", "Sol", "Cuisine légère", "Petites réparations"],
+                "Moyenne": ["Refonte cuisine", "Refonte salle de bain", "Changement fenêtres", "Isolation partielle"],
+                "Lourde": ["Refonte totale", "Reprise électricité complète", "Reprise plomberie", "Agrandissement"]
+            }
             
+            sous_type_options = sous_types.get(type_renovation, [])
+            sous_type_renovation = st.selectbox(
+                "Sous-Type de Rénovation",
+                options=sous_type_options,
+                index=0,
+                key="sous_type_renovation"
+            )
+
+            m2_ajoutes = None
+            if sous_type_renovation == "Agrandissement":
+                m2_ajoutes = st.number_input(
+                    "Surface Supplémentaire Ajoutée (m²)", 
+                    min_value=0, 
+                    value=0, 
+                    step=1, 
+                    key="m2_ajoutes"
+                )
+
             start_date_travaux = st.date_input("Date prévue début des travaux", key="start_date_travaux")
             end_date_travaux = st.date_input("Date prévue fin des travaux", key="end_date_travaux")
             
@@ -56,8 +81,10 @@ class Travaux(BaseSection):
                 "budget_total": budget_renovation,
                 "duree_mois": duree_renovation,
                 "type": type_renovation,
-                "start_date_travaux":start_date_travaux,
-                "end_date_travaux":end_date_travaux,
+                "sous_type": sous_type_renovation,
+                "m2_ajoutes": m2_ajoutes,
+                "start_date_travaux": start_date_travaux,
+                "end_date_travaux": end_date_travaux,
                 "ventilation_active": ventilation_active,
                 "ventilation": ventilation if ventilation_active else {},
                 "fiscalite": {

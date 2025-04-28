@@ -20,10 +20,13 @@ class Result(BaseSection):
         tabs = st.tabs(["Bien1", "Bien2", "Bien3"])
         with tabs[0]:
             DisplayFactory(display="DISPLAY_RESULT_BIEN").render()
+            DisplayFactory(display="DISPLAY_RESULT_V1").render()
         with tabs[1]:
-            pass
+            DisplayFactory(display="DISPLAY_RESULT_V2").render()
+            DisplayFactory(display="DISPLAY_RESULT_V3").render()
         with tabs[2]:
-            pass
+            DisplayFactory(display="DISPLAY_RESULT_V4").render()
+            DisplayFactory(display="DISPLAY_RESULT_V5").render()
         
         st.subheader("Résultat du Loyer")
         tabs = st.tabs(["Loyer1", "Loyer2", "Loyer3"])

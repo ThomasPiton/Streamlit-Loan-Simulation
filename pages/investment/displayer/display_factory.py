@@ -1,19 +1,29 @@
 from pages.investment.displayer.display_base import DisplayBase
 from pages.investment.displayer.displayer_manager import *
 
-class DisplayFactory(DisplayBase):
+class DisplayFactory:
+    def __init__(self, display: str = None):
+        self.display = display.upper() if display else None  # Toujours en majuscules pour éviter les erreurs
 
-    def __init__(self, display:str=None):
-        super().__init__()
-        self.display = display
-    def render(self,**args):
-        """_summary_
-        """
+    def render(self):
+        """Crée et affiche la bonne visualisation selon la valeur de display."""
         if self.display == "DISPLAY_RESULT_BIEN":
-            DisplayResultBien(**args).render()
+            DisplayResultBien().render()
+        
         elif self.display == "DISPLAY_RESULT_V1":
-            DisplayResultBien(**args).render()
+            DisplayPrixEvolutionGraph().render()
+
         elif self.display == "DISPLAY_RESULT_V2":
-            DisplayResultBien(**args).render()
-        
-        
+            DisplayTimeMetricsGraph().render()
+
+        elif self.display == "DISPLAY_RESULT_V3":
+            DisplayUpdateDatesGraph().render()
+
+        elif self.display == "DISPLAY_RESULT_V4":
+            DisplayCorrectedPricesGraph().render()
+
+        elif self.display == "DISPLAY_RESULT_V5":
+            DisplayImpactOnPriceGraph().render()
+
+        else:
+            raise ValueError(f"DisplayFactory: Unknown display type '{self.display}'")

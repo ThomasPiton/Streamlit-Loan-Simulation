@@ -9,20 +9,22 @@ from pages.investment.computation.compute_bien import ComputeBien
 class ComputeManager:
     def __init__(self):
         self.calculateurs = [
-            # ComputePret(),  # Calcul des échéances de prêt
-            # ComputeLoyer(),  # Calcul des revenus locatifs
+            # ComputePret(),  
+            # ComputeLoyer(),  
             ComputeBien(), 
-            # ComputeCharges(),  # Calcul des charges
-            # ComputeFiscalite(),  # Calcul de la fiscalité
-            # ComputeCashflow(),  # Calcul des flux de trésorerie
-            # ComputeRentabilite()  # Calcul des indicateurs de rentabilité
+            # ComputeCharges(),  
+            # ComputeFiscalite(),  
+            # ComputeCashflow(),  
+            # ComputeRentabilite()
         ]
-        self.resultats =[]
-    
+        self.resultats = {}  # Maintenant c'est un dict
+        
     def run_all(self):
         """Exécute tous les calculateurs dans l'ordre défini"""
         for calculateur in self.calculateurs:
             resultat = calculateur.run()
-            self.resultats.append(resultat)
+            # Utiliser le nom de la classe comme clé, ou une propriété .name
+            key = type(calculateur).__name__  # Exemple: "ComputeBien"
+            self.resultats[key] = resultat
         
         return self.resultats

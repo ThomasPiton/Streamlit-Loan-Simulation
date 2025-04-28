@@ -9,7 +9,7 @@ class DisplayBase(ABC):
     
     def __init__(self):
         self.data = DataStore.all()
-        self.result = self.data["result"]
+        self.result = self.data["resultats"]
 
     @abstractmethod  
     def render(self):
