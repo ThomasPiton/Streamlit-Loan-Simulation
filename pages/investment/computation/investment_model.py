@@ -36,6 +36,8 @@ class InvestmentModel:
             return False
         
         self.resultats = self.compute_manager.run_all()
+        DataStore.set("resultats", self.resultats)
+        
         return True
         
     def get_resultats(self):

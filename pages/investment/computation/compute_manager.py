@@ -17,12 +17,12 @@ class ComputeManager:
             # ComputeCashflow(),  # Calcul des flux de trésorerie
             # ComputeRentabilite()  # Calcul des indicateurs de rentabilité
         ]
-        self.resultats = {}
+        self.resultats =[]
     
     def run_all(self):
         """Exécute tous les calculateurs dans l'ordre défini"""
         for calculateur in self.calculateurs:
-            calculateur.run()
-            self.resultats.update(calculateur.get_results())
+            resultat = calculateur.run()
+            self.resultats.append(resultat)
         
         return self.resultats

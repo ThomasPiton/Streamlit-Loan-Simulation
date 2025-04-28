@@ -1,5 +1,6 @@
 class DataStore:
     _data = {}
+    _result  = {}
 
     @classmethod
     def set(cls, key, value):
@@ -12,7 +13,7 @@ class DataStore:
     @classmethod
     def all(cls):
         return cls._data
-
+    
     @classmethod
-    def get_all(cls):  # Ajout de cette méthode
+    def get_all(cls):
         return cls._data.copy()
