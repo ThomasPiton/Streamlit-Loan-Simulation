@@ -23,6 +23,8 @@ if st.session_state["logged_in"]:
             st.Page("pages/03_simu_advanced_v2.py", title="Simulation Avancée V2", icon=":material/monitoring:"),
             st.Page("pages/04_simu_pret_zero.py", title="Simulation Pret Zero", icon=":material/monitoring:"),
             st.Page("pages/06_simu_pret_in_fine.py", title="Simulation Pret In Fine", icon=":material/monitoring:"),
+            st.Page("pages/09_simu_comparateur_pret.py", title="Simulation Comparateur", icon=":material/monitoring:"),
+            st.Page("pages/11_simu_loyer_locatif.py", title="Simulation Loyer Locatif", icon=":material/monitoring:"),
         ],
         "Others": [
             st.Page("pages/about.py", title="About", icon=":material/info:"),
