@@ -177,4 +177,4 @@ fig3 = px.scatter(
     title="Durée vs Taux d'intérêt", template="plotly_white"
 )
 fig3.update_traces(marker=dict(line=dict(width=1, color='DarkSlateGrey')))
-st.plotly_chart(fig3, use_container_width=True)
+st.plotly_chart(fig3, use_container_width=True) 
