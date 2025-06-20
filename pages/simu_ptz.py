@@ -8,6 +8,9 @@ from datetime import datetime
 import io
 from models.pret_zero.config import *
 from models.pret_zero.pret_zero import ComputePretZero
+     # Téléchargement Excel
+from io import BytesIO
+from xlsxwriter import Workbook
 
 # Configuration de la page
 st.set_page_config(page_title="Simulateur - Prêt à Taux Zéro", layout="wide")
@@ -589,8 +592,7 @@ if 'simulation_effectuee' in st.session_state and st.session_state['simulation_e
                 )
             
             with col_download2:
-                # Téléchargement Excel
-                from io import BytesIO
+           
                 buffer = BytesIO()
                 
                 # Reconvertir les valeurs formatées en numériques pour Excel
