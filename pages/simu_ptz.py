@@ -8,7 +8,6 @@ from datetime import datetime
 import io
 from models.pret_zero.config import *
 from models.pret_zero.pret_zero import ComputePretZero
-     # Téléchargement Excel
 from io import BytesIO
 from xlsxwriter import Workbook
 
